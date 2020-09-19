@@ -1,0 +1,177 @@
+// COLORS
+// color pallete
+$primary-color: #2390b4c5;
+$success-color: #06d69ea9;
+$danger-color: #f0325ec7;
+$light-color: #ebe9ed;
+$dark-color: rgb(46, 44, 44);
+$font-family: 'Montserrat', sans-serif;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-family;
+  background-color: rgb(248, 248, 248);
+}
+
+// UTILITIES
+.container {
+  max-width: 1140px;
+  margin: auto;
+}
+
+.bg-light {
+  background-color: $light-color;
+}
+
+.text-small {
+  font-size: 0.7rem;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.span1-2 {
+  grid-column: 1 / span 2;
+}
+
+.span2-1 {
+  grid-column: 2 / span 1;
+}
+
+.grid-2 {
+  grid-template-columns: 1fr 1fr !important;
+}
+
+.button {
+  padding: 0.4rem 0.6rem;
+  background-color: $light-color;
+  color: $dark-color;
+  border: none;
+  margin: 0.5rem;
+  font-family: $font-family;
+  cursor: pointer;
+
+  &--dark {
+    background-color: $dark-color;
+    color: $light-color;
+  }
+}
+
+// HOME
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 2rem 0 1rem 0;
+}
+
+.home {
+  display: flex;
+
+  .sale-form {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 1rem;
+    align-items: flex-start;
+
+    &__fieldset {
+      border: none;
+      display: grid;
+      grid-template-columns: 1fr;
+      margin: 0.5rem;
+      padding: 0.5rem;
+      align-items: flex-start;
+
+      &--product {
+        position: relative;
+
+        & .fas {
+          position: absolute;
+          top: 0;
+          right: 0;
+          padding: 0.5rem;
+          cursor: pointer;
+        }
+      }
+
+      & > .sale-form__fieldset {
+        margin: 0.2rem 0;
+        padding: 0;
+
+        &:nth-child(even) {
+          margin-right: 0.3rem;
+        }
+
+        &:nth-child(odd) {
+          margin-left: 0.15rem;
+        }
+      }
+    }
+  }
+
+  .sales-report {
+    flex: 1;
+    padding: 1rem;
+  }
+}
+
+.input {
+  padding: 0.4rem 0.6rem;
+  width: 100%;
+  border: 2px solid $light-color;
+  font-family: $font-family;
+
+  &__label {
+    display: block;
+    margin: 0 0.5rem 0.3rem 0.5rem;
+    margin-left: 0;
+
+    &--product {
+      margin-bottom: 0;
+
+      & ~ .input__label {
+        margin-top: 0.3rem;
+      }
+    }
+  }
+
+  &:focus:not([readonly]) {
+    outline: 0;
+    border: 2px solid $primary-color;
+  }
+
+  &--valid {
+    border: 2px solid $success-color;
+  }
+
+  &--error {
+    border: 2px solid $danger-color;
+
+    & + .input__error-text {
+      margin: 0.2rem 0;
+      color: $danger-color;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .home {
+    flex-direction: column;
+
+    .sale-form__fieldset > .sale-form__fieldset:nth-child(odd),
+    .sale-form__fieldset > .sale-form__fieldset:nth-child(even) {
+      margin: 0;
+    }
+  }
+
+  .sale-form__fieldset {
+    grid-column: 1 / span 2;
+  }
+}
