@@ -14,15 +14,16 @@ const FormInput = ({
   inputMode,
   pattern,
   readonly,
+  dataIndex,
+  dataFieldname,
   ...props
 }) => {
   const [error, setError] = useState(false);
   const [hasChanged, setHasChanged] = useState(false);
   const [focused, setFocused] = useState(false);
-  const [stateValue, setValue] = useState(value);
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    onChange(e);
 
     // catching 'x' click on date picker
     if (type === 'date' && e.target.value === '') {
@@ -70,13 +71,15 @@ const FormInput = ({
         type={type}
         placeholder={placeholder}
         onChange={handleChange}
-        value={stateValue}
+        value={value}
         onBlur={onBlur}
         onFocus={onFocus}
         inputMode={inputMode}
         pattern={pattern}
         className={classNames()}
         readOnly={readonly}
+        data-fieldname={dataFieldname}
+        data-index={dataIndex}
       />
       {error && <small className='input__error-text'>{error}</small>}
     </Fragment>
@@ -102,6 +105,8 @@ FormInput.propTypes = {
   inputMode: PropTypes.string,
   pattern: PropTypes.string,
   readonly: PropTypes.bool,
+  dataIndex: PropTypes.number,
+  dataFieldname: PropTypes.string,
 };
 
 export default FormInput;

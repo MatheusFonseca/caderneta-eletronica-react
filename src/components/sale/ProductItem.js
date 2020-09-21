@@ -1,8 +1,16 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import FormInput from '../layout/FormInput';
 
-const ProductItem = ({ index, name, qtt, unitPrice, price }) => {
+const ProductItem = ({ index }) => {
+  const [product, setProduct] = useState({
+    productName: '',
+    quantity: 1,
+    unitPrice: 0,
+  });
+
+  const { productName, quantity, unitPrice } = product;
+
   const validateInput = (value) => {
     if (value === '') {
       return 'Insira um produto';
@@ -10,6 +18,15 @@ const ProductItem = ({ index, name, qtt, unitPrice, price }) => {
       return null;
     }
   };
+
+  const onChange = (e) => {
+    setProduct({
+      ...product,
+      [e.target.name]: e.target.value.replace(',', '.'),
+    });
+  };
+
+  const price = (quantity * unitPrice).toFixed(2);
 
   const validate = () => {};
 
@@ -22,7 +39,8 @@ const ProductItem = ({ index, name, qtt, unitPrice, price }) => {
         <FormInput
           name='productName'
           label='Nome'
-          value={name}
+          value={productName}
+          onChange={onChange}
           placeholder=''
           classNameLabel='text-small'
           validateInput={validateInput}
@@ -30,10 +48,11 @@ const ProductItem = ({ index, name, qtt, unitPrice, price }) => {
       </fieldset>
       <fieldset className='sale-form__fieldset'>
         <FormInput
-          name='productQtt'
+          name='quantity'
           label='Quantidade'
           type='text'
-          value={qtt}
+          value={quantity}
+          onChange={onChange}
           inputMode='numeric'
           placeholder=''
           classNameLabel='text-small'
@@ -42,9 +61,10 @@ const ProductItem = ({ index, name, qtt, unitPrice, price }) => {
       </fieldset>
       <fieldset className='sale-form__fieldset'>
         <FormInput
-          name='productUnitPrice'
+          name='unitPrice'
           label='Preço Unitário'
           type='text'
+          onChange={onChange}
           value={unitPrice}
           inputMode='numeric'
           placeholder=''
@@ -54,10 +74,11 @@ const ProductItem = ({ index, name, qtt, unitPrice, price }) => {
       </fieldset>
       <fieldset className='sale-form__fieldset'>
         <FormInput
-          name='productPrice'
+          name='price'
           label='Preço'
           type='text'
           value={price}
+          onChange={onChange}
           placeholder=''
           readonly={true}
           classNameLabel='text-small'
@@ -68,19 +89,8 @@ const ProductItem = ({ index, name, qtt, unitPrice, price }) => {
   );
 };
 
-ProductItem.defaultProps = {
-  name: '',
-  qtt: 1,
-  unitPrice: 0,
-  price: 0,
-};
-
 ProductItem.propTypes = {
   index: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  qtt: PropTypes.number.isRequired,
-  unitPrice: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
 };
 
 export default ProductItem;
