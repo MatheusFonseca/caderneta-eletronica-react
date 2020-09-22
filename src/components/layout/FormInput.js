@@ -16,6 +16,7 @@ const FormInput = ({
   readonly,
   dataIndex,
   dataFieldname,
+  disableValidate,
   ...props
 }) => {
   const [error, setError] = useState(false);
@@ -32,7 +33,7 @@ const FormInput = ({
   };
 
   const onBlur = (e) => {
-    if (!readonly) {
+    if (!readonly && !disableValidate) {
       setError(validateInput(e.target.value));
       setHasChanged(true);
       setFocused(false);
@@ -90,6 +91,7 @@ FormInput.defaultProps = {
   type: 'text',
   className: '',
   value: '',
+  disableValidate: false,
 };
 
 FormInput.propTypes = {
@@ -107,6 +109,7 @@ FormInput.propTypes = {
   readonly: PropTypes.bool,
   dataIndex: PropTypes.number,
   dataFieldname: PropTypes.string,
+  disableValidate: PropTypes.bool,
 };
 
 export default FormInput;

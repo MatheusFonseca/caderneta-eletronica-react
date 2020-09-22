@@ -7,6 +7,7 @@ import Button from '../layout/Button';
 const AddSaleForm = () => {
   const blankProduct = {
     productName: '',
+    category: '',
     quantity: 1,
     unitPrice: 0,
     price: 0,
@@ -66,48 +67,66 @@ const AddSaleForm = () => {
     }
   };
 
+  const saleTotal = productState
+    .map((product) => product.price)
+    .reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
+
   return (
-    <form className='sale-form'>
-      <fieldset className='sale-form__fieldset'>
-        <FormInput
-          name='customer'
-          label='Cliente'
-          value={saleState.customer}
-          onChange={handleSaleChange}
-          placeholder=''
-          validateInput={validateInput}
-        ></FormInput>
-      </fieldset>
-      <fieldset className='sale-form__fieldset'>
-        <FormInput
-          name='date'
-          label='Data da Venda'
-          type='date'
-          value={saleState.date}
-          onChange={handleSaleChange}
-          placeholder=''
-          validateInput={validateInput}
-        ></FormInput>
-      </fieldset>
-      {/* Dynamic inputs */}
-      {productState.map((product, index) => {
-        return (
-          <ProductInputs
-            key={index}
-            index={index}
-            productState={productState}
-            handleProductsChange={handleProductsChange}
-            onDelete={onDelete}
+    <div className='sale-form-container'>
+      <h3 className='title title--section'>Nova Venda</h3>
+      <form className='sale-form'>
+        <fieldset className='sale-form__fieldset'>
+          <FormInput
+            name='customer'
+            label='Cliente'
+            value={saleState.customer}
+            onChange={handleSaleChange}
+            placeholder=''
             validateInput={validateInput}
-          />
-        );
-      })}
-      <Button
-        className='span2-1'
-        onClick={addProduct}
-        text='Adicionar Produto'
-      ></Button>
-    </form>
+          ></FormInput>
+        </fieldset>
+        <fieldset className='sale-form__fieldset'>
+          <FormInput
+            name='date'
+            label='Data da Venda'
+            type='date'
+            value={saleState.date}
+            onChange={handleSaleChange}
+            placeholder=''
+            validateInput={validateInput}
+          ></FormInput>
+        </fieldset>
+        {/* Dynamic inputs */}
+        {productState.map((product, index) => {
+          return (
+            <ProductInputs
+              key={index}
+              index={index}
+              productState={productState}
+              handleProductsChange={handleProductsChange}
+              onDelete={onDelete}
+              validateInput={validateInput}
+            />
+          );
+        })}
+        <div className='sale-form__total span1-2'>
+          <p className='sale-form__total-label'>Total</p>
+          <p className='sale-form__total-value'>
+            R$ <span>{parseFloat(saleTotal).toFixed(2)}</span>
+          </p>
+        </div>
+        <Button
+          onClick={addProduct}
+          text='Adicionar Produto'
+          icon='fas fa-plus'
+        ></Button>
+        <Button
+          className='button--dark'
+          onClick={addProduct}
+          text='Finalizar Venda'
+        ></Button>
+      </form>
+    </div>
   );
 };
 

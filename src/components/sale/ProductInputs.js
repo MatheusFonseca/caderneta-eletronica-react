@@ -10,8 +10,9 @@ const ProductInputs = ({
   onDelete,
 }) => {
   const productId = `productName-${index}`;
-  const quantityId = `quantity-${index}`;
   const unitPriceId = `unitPrice-${index}`;
+  const categoryId = `category-${index}`;
+  const quantityId = `quantity-${index}`;
   const priceId = `price-${index}`;
 
   return (
@@ -44,17 +45,15 @@ const ProductInputs = ({
       </fieldset>
       <fieldset className='sale-form__fieldset'>
         <FormInput
-          name={quantityId}
-          label='Quantidade'
-          type='text'
+          name={categoryId}
+          label='Categoria'
           dataIndex={index}
-          dataFieldname='quantity'
-          inputMode='numeric'
+          dataFieldname='category'
           placeholder=''
           classNameLabel='text-small'
           validateInput={validateInput}
           onChange={handleProductsChange}
-          value={productState[index].quantity}
+          value={productState[index].category}
         ></FormInput>
       </fieldset>
       <fieldset className='sale-form__fieldset'>
@@ -74,8 +73,23 @@ const ProductInputs = ({
       </fieldset>
       <fieldset className='sale-form__fieldset'>
         <FormInput
+          name={quantityId}
+          label='Quantidade'
+          type='text'
+          dataIndex={index}
+          dataFieldname='quantity'
+          inputMode='numeric'
+          placeholder=''
+          classNameLabel='text-small'
+          validateInput={validateInput}
+          onChange={handleProductsChange}
+          value={productState[index].quantity}
+        ></FormInput>
+      </fieldset>
+      <fieldset className='sale-form__fieldset span2-1'>
+        <FormInput
           name={priceId}
-          label='Preço'
+          label='Total'
           type='text'
           dataIndex={index}
           dataFieldname='price'

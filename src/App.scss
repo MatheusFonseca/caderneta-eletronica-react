@@ -1,10 +1,10 @@
 // COLORS
 // color pallete
 $primary-color: #2390b4c5;
-$success-color: #06d69ea9;
-$danger-color: #f0325ec7;
+$success-color: #21bf73;
+$danger-color: #fd5e53;
 $light-color: #ebe9ed;
-$dark-color: rgb(46, 44, 44);
+$dark-color: #2d3a3a;
 $font-family: 'Montserrat', sans-serif;
 
 * {
@@ -15,7 +15,7 @@ $font-family: 'Montserrat', sans-serif;
 
 body {
   font-family: $font-family;
-  background-color: rgb(248, 248, 248);
+  background-color: #f8f8f8;
 }
 
 // UTILITIES
@@ -24,8 +24,24 @@ body {
   margin: auto;
 }
 
+.m-0 {
+  margin: 0 !important;
+}
+
+.mt-2 {
+  margin-top: 1.5rem;
+}
+
+.p-1 {
+  padding: 0.5rem;
+}
+
 .bg-light {
   background-color: $light-color;
+}
+
+.bg-dark {
+  background-color: $dark-color;
 }
 
 .text-small {
@@ -34,6 +50,14 @@ body {
 
 .text-bold {
   font-weight: bold;
+}
+
+.text-light {
+  color: $light-color;
+}
+
+.text-success {
+  color: $success-color;
 }
 
 .span1-2 {
@@ -48,18 +72,28 @@ body {
   grid-template-columns: 1fr 1fr !important;
 }
 
+.flex-auto {
+  flex: auto;
+}
+
 .button {
   padding: 0.4rem 0.6rem;
   background-color: $light-color;
   color: $dark-color;
   border: none;
   margin: 0.5rem;
+  min-height: 40px;
   font-family: $font-family;
   cursor: pointer;
 
   &--dark {
     background-color: $dark-color;
     color: $light-color;
+  }
+
+  &--search {
+    margin: 0;
+    height: 40px;
   }
 }
 
@@ -69,17 +103,39 @@ body {
   font-weight: bold;
   text-align: center;
   margin: 2rem 0 1rem 0;
+  color: $dark-color;
+
+  &--section {
+    font-size: 2rem;
+    font-weight: normal;
+    margin-bottom: 0;
+  }
 }
 
 .home {
   display: flex;
 
   .sale-form {
-    flex: 1;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     padding: 1rem;
     align-items: flex-start;
+
+    &-container {
+      flex: 1;
+    }
+
+    &__total {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      justify-content: space-between;
+      margin: 1rem 0.5rem;
+      background-color: $success-color;
+      color: $light-color;
+      font-weight: bold;
+    }
 
     &__fieldset {
       border: none;
@@ -91,6 +147,7 @@ body {
 
       &--product {
         position: relative;
+        box-shadow: rgba(0, 0, 0, 0.25) 4px 4px 10px 1px;
 
         & .fas {
           position: absolute;
@@ -112,26 +169,29 @@ body {
         &:nth-child(odd) {
           margin-left: 0.15rem;
         }
+
+        &:last-child {
+          margin-left: 0.15rem;
+          margin-right: 0;
+        }
       }
     }
-  }
-
-  .sales-report {
-    flex: 1;
-    padding: 1rem;
   }
 }
 
 .input {
   padding: 0.4rem 0.6rem;
   width: 100%;
+  height: 40px;
   border: 2px solid $light-color;
   font-family: $font-family;
+  color: $dark-color;
 
   &__label {
     display: block;
     margin: 0 0.5rem 0.3rem 0.5rem;
     margin-left: 0;
+    color: $dark-color;
 
     &--product {
       margin-bottom: 0;
@@ -148,7 +208,7 @@ body {
   }
 
   &--valid {
-    border: 2px solid $success-color;
+    border: 2px solid $light-color;
   }
 
   &--error {
@@ -161,17 +221,203 @@ body {
   }
 }
 
-@media (max-width: 576px) {
+.home {
+  .sales-report {
+    flex: 1;
+    color: $dark-color;
+
+    .searchbar {
+      padding: 1rem;
+      display: flex;
+      align-items: flex-end;
+
+      .sale-form__fieldset {
+        margin: 0;
+        margin-top: 1rem;
+        padding: 0;
+      }
+    }
+
+    .customer-card {
+      padding: 1rem;
+      margin: 1rem;
+      margin-top: 0.5rem;
+      background-color: #fff;
+      box-shadow: rgba(0, 0, 0, 0.25) 4px 4px 10px 1px;
+      overflow-x: auto;
+
+      &__name {
+        text-align: center;
+        font-weight: bold;
+        margin-top: 1rem;
+      }
+
+      &__tablehead {
+        display: flex;
+        padding-right: 0.5rem;
+        margin-top: 1.5rem;
+        justify-content: space-between;
+        height: 40px;
+        align-items: center;
+        font-size: 0.8rem;
+      }
+
+      &__date {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        background-color: $dark-color;
+        color: $light-color;
+        padding: 0.5rem;
+
+        &--success {
+          background-color: $success-color;
+        }
+      }
+
+      &__table {
+        font-size: 0.8rem;
+        width: 100%;
+        text-align: center;
+        // border-collapse: collapse;
+
+        & td {
+          height: 40px;
+          padding: 0.5rem;
+
+          &:first-child {
+            text-align: left;
+          }
+
+          &:last-child {
+            text-align: right;
+          }
+        }
+        & th {
+          height: 40px;
+          padding: 0.5rem;
+
+          &:first-child {
+            text-align: left;
+          }
+
+          &:last-child {
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  .title {
+    font-size: 2rem;
+    margin: 2rem 1rem;
+
+    &--section {
+      margin-top: 1rem;
+      margin-bottom: 0;
+    }
+  }
+
+  .home {
+    .sale-form {
+      padding-top: 0;
+    }
+  }
+
   .home {
     flex-direction: column;
+  }
+}
 
-    .sale-form__fieldset > .sale-form__fieldset:nth-child(odd),
-    .sale-form__fieldset > .sale-form__fieldset:nth-child(even) {
-      margin: 0;
-    }
+@media (max-width: 900px) {
+  .home .sale-form__fieldset:first-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .sale-form__fieldset > .sale-form__fieldset:nth-child(odd),
+  .sale-form__fieldset > .sale-form__fieldset:nth-child(even) {
+    margin: 0.5rem 0;
   }
 
   .sale-form__fieldset {
     grid-column: 1 / span 2;
+  }
+
+  // Force table to not be like tables anymore
+  .home {
+    .sales-report {
+      .customer-card__table {
+        display: block;
+
+        table,
+        thead,
+        tbody,
+        tfoot,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+
+        /* Hide table headers (but not display: none;, for accessibility) */
+        thead tr {
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+        }
+
+        tr {
+          position: relative;
+
+          &:nth-child(even) {
+            background-color: $light-color;
+          }
+        }
+
+        td {
+          display: flex;
+          align-items: center;
+          padding-left: 50%;
+          text-align: left;
+          position: relative;
+
+          &:last-child {
+            text-align-last: left;
+          }
+        }
+
+        td:before {
+          position: absolute;
+          /* Top/left values mimic padding */
+          top: 12.5px;
+          left: 8px;
+          width: 45%;
+          font-weight: bold;
+          padding-right: 10px;
+          white-space: nowrap;
+        }
+
+        td:nth-of-type(1):before {
+          content: 'Produto';
+        }
+        td:nth-of-type(2):before {
+          content: 'Categoria';
+        }
+        td:nth-of-type(3):before {
+          content: 'Preço Unt';
+        }
+        td:nth-of-type(4):before {
+          content: 'Qtd';
+        }
+        td:nth-of-type(5):before {
+          content: 'Preço';
+        }
+      }
+    }
   }
 }
