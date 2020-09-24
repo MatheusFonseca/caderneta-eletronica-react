@@ -13,6 +13,7 @@ const FormInput = ({
   validateInput,
   inputMode,
   pattern,
+  refValue,
   readonly,
   dataIndex,
   dataFieldname,
@@ -78,6 +79,7 @@ const FormInput = ({
         inputMode={inputMode}
         pattern={pattern}
         className={classNames()}
+        ref={refValue}
         readOnly={readonly}
         data-fieldname={dataFieldname}
         data-index={dataIndex}
@@ -110,6 +112,7 @@ FormInput.propTypes = {
   dataIndex: PropTypes.number,
   dataFieldname: PropTypes.string,
   disableValidate: PropTypes.bool,
+  refValue: PropTypes.object,
 };
 
 export default FormInput;

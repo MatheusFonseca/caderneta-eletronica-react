@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Button from './Button';
 import FormInput from './FormInput';
+import SaleContext from '../../context/sale/saleContext';
 
-const Search = ({ onSearch, searchState }) => {
+const Search = () => {
+  const saleContext = useContext(SaleContext);
+  const { filtered, filterSales, clearFilter } = saleContext;
+  const [searchState, setSearchState] = useState('');
+
+  const onChange = (e) => {
+    setSearchState(e.target.value);
+
+    if (e.target.value !== '') {
+      filterSales(e.target.value);
+    } else {
+      clearFilter();
+    }
+  };
+
   const validateInput = () => {};
-
   const searchCustomer = () => {};
 
   return (
@@ -15,7 +29,7 @@ const Search = ({ onSearch, searchState }) => {
           label='Buscar Cliente'
           placeholder=''
           value={searchState}
-          onChange={onSearch}
+          onChange={onChange}
           validateInput={validateInput}
           disableValidate={true}
         ></FormInput>

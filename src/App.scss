@@ -95,6 +95,11 @@ body {
     margin: 0;
     height: 40px;
   }
+
+  &--danger {
+    background-color: $danger-color;
+    color: $light-color;
+  }
 }
 
 // HOME
@@ -254,12 +259,16 @@ body {
 
       &__tablehead {
         display: flex;
-        padding-right: 0.5rem;
         margin-top: 1.5rem;
         justify-content: space-between;
         height: 40px;
         align-items: center;
         font-size: 0.8rem;
+
+        & .fas {
+          cursor: pointer;
+          padding: 0.5rem;
+        }
       }
 
       &__date {

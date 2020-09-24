@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import formatDate from '../../utils/formatDate';
 import FormInput from '../layout/FormInput';
 import ProductInputs from './ProductInputs';
 import Button from '../layout/Button';
+import SaleContext from '../../context/sale/saleContext';
 
 const AddSaleForm = () => {
+  const saleContext = useContext(SaleContext);
+  const { addSale, updateSale, current, clearCurrent } = saleContext;
+
   const blankProduct = {
     productName: '',
     category: '',
@@ -24,17 +28,63 @@ const AddSaleForm = () => {
     date: formatDate(Date.now()),
   });
 
+  const clearForm = () => {
+    // Cleaning form
+    setProductState([
+      {
+        ...blankProduct,
+      },
+    ]);
+    setSaleState({
+      customer: '',
+      date: formatDate(Date.now()),
+    });
+  };
+
+  useEffect(() => {
+    if (current !== null) {
+      // Formatting date
+      let formattedDate = [];
+      formattedDate = current.date.split('/');
+      formattedDate = formattedDate.reverse().join('-');
+
+      // Filling form
+      setSaleState({
+        ...saleState,
+        customer: current.customer,
+        date: formattedDate,
+        id: current.id,
+      });
+
+      const updatedProducts = [...current.products];
+      setProductState(
+        updatedProducts.map((product) => ({
+          ...product,
+          price: product.unitPrice * product.quantity,
+        }))
+      );
+    } else {
+      clearForm();
+    }
+
+    //eslint-disable-next-line
+  }, [saleContext, current]);
+
   const handleSaleChange = (e) => {
     setSaleState({
       ...saleState,
-      [e.target.name]: [e.target.value],
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleProductsChange = (e) => {
     const updatedProducts = [...productState];
     const { index, fieldname } = e.target.dataset;
-    updatedProducts[index][fieldname] = e.target.value;
+    if (fieldname === 'unitPrice' || fieldname === 'quantity') {
+      updatedProducts[index][fieldname] = e.target.value.replace(',', '.');
+    } else {
+      updatedProducts[index][fieldname] = e.target.value;
+    }
 
     // Calculating total price and formatting
     const unitPrice = updatedProducts[index]['unitPrice']
@@ -43,6 +93,7 @@ const AddSaleForm = () => {
     const quantity = updatedProducts[index]['quantity']
       .toString()
       .replace(',', '.');
+
     updatedProducts[index]['price'] = (unitPrice * quantity).toFixed(2);
     setProductState(updatedProducts);
   };
@@ -67,13 +118,32 @@ const AddSaleForm = () => {
     }
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (!current) {
+      addSale(saleState, productState);
+    } else {
+      updateSale(saleState, productState);
+    }
+
+    // Cleaning form
+    clearAll();
+  };
+
+  const clearAll = () => {
+    clearCurrent();
+  };
+
+  //Filling total
   const saleTotal = productState
     .map((product) => product.price)
     .reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
 
   return (
     <div className='sale-form-container'>
-      <h3 className='title title--section'>Nova Venda</h3>
+      <h3 className='title title--section'>
+        {current ? 'Editar Venda' : 'Nova Venda'}
+      </h3>
       <form className='sale-form'>
         <fieldset className='sale-form__fieldset'>
           <FormInput
@@ -122,9 +192,16 @@ const AddSaleForm = () => {
         ></Button>
         <Button
           className='button--dark'
-          onClick={addProduct}
-          text='Finalizar Venda'
+          onClick={onSubmit}
+          text={current ? 'Editar Venda' : 'Finalizar Venda'}
         ></Button>
+        {current && (
+          <Button
+            className='button--danger'
+            onClick={clearAll}
+            text='Cancelar'
+          ></Button>
+        )}
       </form>
     </div>
   );
