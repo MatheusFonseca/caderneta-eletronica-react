@@ -1,4 +1,4 @@
-#Caderneta Eletrônica React
+# Caderneta Eletrônica React
 
 Aplicação para pequenos comércios ou empreendedores registrarem suas vendas, ao invés de usar as famosas cadernetas.
 
